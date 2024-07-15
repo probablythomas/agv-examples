@@ -925,9 +925,9 @@ class LongitudinalUSV:
         ani = animation.FuncAnimation(
             fig,
             movie,
-            np.arange(1, len(x[0, :]), max(1, int(1 / T / 20))),
+            np.arange(1, len(x[0, :]), 1),
             init_func=init,
-            interval=T * 1000 * max(1, int(1 / T / 20)),
+            interval=T * 1000,
             blit=True,
             repeat=False,
         )
