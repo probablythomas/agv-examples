@@ -16,6 +16,7 @@ Run me in interactive Python for an animation!
 import numpy as np
 import matplotlib.pyplot as plt
 from mobotpy.models import LongitudinalUSV
+from IPython.display import display
 
 # Set the simulation time [s] and the sample period [s]
 SIM_TIME = 5.0
@@ -34,9 +35,9 @@ def wave(x, t):
     amplitude = 1.0  # [m]
     phase = np.pi / 2  # [rad]
 
-    period = 1  # [s]
+    period = 2  # [s]
     time_frequency = 1 / period  # [1/s]
-    wavelength = 10  # [m]
+    wavelength = 5  # [m]
     space_frequency = 1 / wavelength  # [1/m]
 
     # Find height of wave
