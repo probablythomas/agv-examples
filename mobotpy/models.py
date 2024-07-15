@@ -841,7 +841,8 @@ class LongitudinalUSV:
     def animate(self, x, T,
                 wave_positions=[], wave_data=[],
                 save_ani=False, filename="animate_longitudinalUSV.gif",
-                relative=False, xlim=None, ylim=None):
+                relative=False, original_fps=False,
+                xlim=None, ylim=None):
         """Create an animation of an uncrewed surface vessel (longitudinal model).
 
         Returns animation object for array of vehicle positions x with time
@@ -886,9 +887,8 @@ class LongitudinalUSV:
 
         def movie(k):
             """Function called at each step of the animation."""
-            # Draw the path followed by the vehicle
-            # line.set_data(x[0, 0: k + 1], x[1, 0: k + 1])
-            # Draw the differential drive vehicle
+
+            # Draw the boat
             X_B, Y_B, X_M, Y_M = self.draw(
                 x[0, k], x[1, k], x[2, k]
             )
@@ -922,16 +922,21 @@ class LongitudinalUSV:
             return body, mast, time_text
 
         # Create the animation
+        if original_fps:
+            frame_multiplier = 1
+        else:
+            frame_multiplier = 10
+
         ani = animation.FuncAnimation(
             fig,
             movie,
-            np.arange(1, len(x[0, :]), 1),
+            np.arange(1, len(x[0, :]), frame_multiplier),
             init_func=init,
-            interval=T * 1000,
+            interval=T*1000*frame_multiplier,
             blit=True,
             repeat=False,
         )
         if save_ani == True:
-            ani.save(filename, fps=min(1 / T, 5))
+            ani.save(filename, fps=(1/T)/frame_multiplier)
         # Return the figure object
         return ani
